@@ -1,4 +1,4 @@
-# 🔧 Qmeter ESP32 – Charge Measurement Device
+# ⚡ SmartQmeter – Electrostatic Charge Indicator Device
 
 ## Description
 
