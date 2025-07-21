@@ -1,57 +1,66 @@
-# Smart Qmeter
+🔧 Qmeter ESP32 – Charge Measurement Device
+Description:
+This project implements a low-cost, real-time electrometer-style charge sensor using an ESP32 development board and an op-amp-based integrator circuit. The system is capable of detecting small electric charges by measuring the output voltage of the integrator and converting it into charge (in nanoCoulombs) based on a known capacitance.
 
-A **Smart Qmeter** egy ESP32 (WeMos LOLIN32 Lite) mikrokontrollerre épülő, egyszerű, mégis sokoldalú töltésmérő eszköz. A célja, hogy demonstrálja a töltésmérés és a visszajelzés működését mikrokontrolleres környezetben.
+⚙️ System Overview
+Core MCU: ESP32 (WeMos LOLIN32 Lite)
 
-## 🔧 Főbb jellemzők
+Analog frontend: Inverting integrator powered by +12 V supply
 
-- Analóg töltésszenzorral mért feszültség értékelése
-- Töltés számítása kalibrált Cf kondenzátor alapján
-- Automatikus nullázás (AutoZero gombbal)
-- Váltható méréstartomány (pl. 520 pF és 4,7 nF Cf)
-- Bluetooth kommunikáció (`Qmeter` néven jelenik meg)
-- Soros kommunikáció (9600 baud)
-- LED-es visszajelzés (pozitív = piros, negatív = zöld)
-- PWM-es fényerő-szabályzás a töltés nagyságától függően
+Capacitor switching: DG444 analog switch IC
 
-## 📷 Hardver követelmények
+Communication: USB Serial and Bluetooth Serial (device name: Qmeter)
 
-- WeMos LOLIN32 Lite (ESP32)
-- DG444 analóg multiplexer
-- Cf kondenzátorok (tipikusan: 520 pF és 4,7 nF)
-- LED-ek: 2 piros, 2 zöld (PWM vezérelve)
-- AutoZero nyomógomb
-- Analóg töltésmérő elektronika (pl. erősítő, integrátor)
+User interaction: Physical auto-zero button + command interface
 
-## 📂 Fájlok
+Visual feedback: RGB LEDs indicating charge level and polarity
 
-- `Smart_Qmeter.ino` – a fő programfájl (Arduino IDE-hez)
-- `README.md` – ez a leírás
+🧮 Measurement Principle
+The integrator converts input charge to voltage.
 
-## 🔌 Parancsok (Bluetooth vagy Soros porton keresztül)
+A voltage divider (8.1 kΩ / 3.9 kΩ) scales the ±5 V swing (around +6 V) to fit the ESP32 ADC range.
 
-| Parancs | Funkció              |
-|--------|----------------------|
-| `Z`    | nullázás (AutoZero)  |
-| `+`    | pozitív irány beállítása |
-| `-`    | negatív irány beállítása |
-| `H`    | nagy érzékenység (Cf=520 pF) |
-| `L`    | kis érzékenység (Cf=4,7 nF)  |
+The ESP32 samples this voltage and subtracts a baseline (zeroLevel) captured during auto-zeroing.
 
-## 💡 LED visszajelzés
+The resulting difference is converted to charge using the known capacitance value and scaling constants.
 
-A töltés polaritása és nagysága alapján a LED-ek különböző fényerővel világítanak:
-- **Zöld**: negatív töltés
-- **Piros**: pozitív töltés
-- Kis töltés esetén halvány fény, nagy töltésnél teljes fényerő
+🔁 Supported Commands
+These can be sent over USB serial or Bluetooth:
 
-## 📈 Működés röviden
+Command	Action
+Z	Perform auto-zero
+H	Switch to high sensitivity (520 pF)
+L	Switch to low sensitivity (4.7 nF)
++	Display positive polarity as-is
+-	Invert displayed polarity
 
-1. A mikrokontroller az A27 bemenetről olvassa a feszültséget.
-2. A program kiszámítja a Cf kondenzátoron fellépő töltést.
-3. A töltés értéke továbbításra kerül Bluetooth-on és/vagy soros porton keresztül.
-4. A LED-ek vizuálisan kijelzik az értéket.
+🌈 LED Indicators
+Red LEDs: Positive charge
 
----
+Green LEDs: Negative charge
 
-📌 A projekt oktatási céllal készült, egyszerű kísérleti demonstrációhoz.  
-Ha hasznosnak találod, csillagozd a repót, vagy nyugodtan forkolhatod!
+The brightness of each LED indicates the magnitude of the charge.
+
+The system uses PWM to create smooth brightness transitions.
+
+📐 Calibration and Accuracy
+All constants (nanoC per ADC step) are calculated from:
+
+Capacitance values (520 pF and 4.7 nF)
+
+Voltage divider ratio (0.325)
+
+ADC resolution (12-bit)
+
+ESP32 reference voltage (3.3 V)
+
+The system assumes a ±5 V swing around +6 V from the integrator, covering roughly 0.325–3.575 V on the ADC input.
+
+📤 Output
+The measured charge is printed continuously to:
+
+USB Serial (baud: 9600)
+
+Bluetooth Serial (as plain text)
+
+Format: Signed charge in nanoCoulombs with two decimal places
