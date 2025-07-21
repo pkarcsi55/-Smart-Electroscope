@@ -34,8 +34,8 @@ A **Smart Qmeter** egy ESP32 (WeMos LOLIN32 Lite) mikrokontrollerre épülő, eg
 | `Z`    | nullázás (AutoZero)  |
 | `+`    | pozitív irány beállítása |
 | `-`    | negatív irány beállítása |
-| `H`    | nagy érzékenység (pl. 0.9 nF Cf) |
-| `L`    | kis érzékenység (pl. 10 nF Cf)  |
+| `H`    | nagy érzékenység (Cf=520 pF) |
+| `L`    | kis érzékenység (Cf=4,7 nF)  |
 
 ## 💡 LED visszajelzés
 
