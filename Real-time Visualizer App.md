@@ -38,4 +38,4 @@ This application is designed primarily for **educational use** in classrooms and
 
 ---
 
-> The project source is available in `.aia` format in this repository. Suitable for modification and extension in MIT App Inventor.
+> The project source is available in `.aia` format in this repository (https://github.com/pkarcsi55/-Smart-Qmeter/blob/main/Qmeter.aia). Suitable for modification and extension in MIT App Inventor.
