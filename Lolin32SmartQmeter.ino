@@ -12,7 +12,7 @@
 BluetoothSerial SerialBT;
 
 // --- Physical constants and ADC conversion ---
-#define CAPACITANCE_HIGH_RANGE  0.520  // nF (520 pF)
+#define CAPACITANCE_HIGH_RANGE  0.560  // nF (560 pF)
 #define CAPACITANCE_LOW_RANGE   4.700  // nF
 #define VOLTAGE_DIVIDER_RATIO   0.325  // 3.9k / (8.1k + 3.9k)
 #define ADC_RESOLUTION          4096.0 // 12-bit ADC
@@ -36,7 +36,7 @@ const int ledRed2   = 33;
 const int analogInputPin = 27;
 
 float nanoC = NANO_C_PER_STEP_HIGH;
-float Qmax = CAPACITANCE_HIGH_RANGE * 10.0;  // For ±5 V swing
+float Qmax = CAPACITANCE_HIGH_RANGE * 8.0;  // For ±4 V swing
 float zeroLevel = 0.0;
 float Q = 0;
 int rawValue = 0;
