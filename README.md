@@ -34,7 +34,7 @@ You can send single-character commands via USB or Bluetooth Serial:
 | Command | Action                                |
 |---------|---------------------------------------|
 | `Z`     | Perform auto-zero                     |
-| `H`     | Switch to high sensitivity (520 pF)   |
+| `H`     | Switch to high sensitivity (560 pF)   |
 | `L`     | Switch to low sensitivity (4.7 nF)    |
 | `+`     | Display positive polarity as-is       |
 | `-`     | Invert displayed polarity             |
